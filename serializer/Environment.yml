@@ -1,0 +1,11 @@
+App\Entity\Environment:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            type: int
+        application:
+            expose: true
+        title:
+            expose: true
+            type: string
