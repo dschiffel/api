@@ -26,7 +26,10 @@ class ApplicationController extends AbstractFOSRestController
     {
         $applications = $this->getDoctrine()->getRepository('App:Application')->findAll();
 
-        return $this->view(compact('applications'));
+        // todo resolve cors in generic way
+        return $this->view(compact('applications'), null, [
+            'Access-Control-Allow-Origin' => '*',
+        ]);
     }
 
     /**

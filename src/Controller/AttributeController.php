@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
-class AttributesController extends AbstractFOSRestController
+class AttributeController extends AbstractFOSRestController
 {
     /**
      * @Rest\Get("/applications/{app_id}/attributes")
