@@ -11,10 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
-/**
- * Class ApplicationController
- * @package App\Controller
- */
 class ApplicationController extends AbstractFOSRestController
 {
     /**
