@@ -22,7 +22,10 @@ class ApplicationController extends AbstractFOSRestController
     {
         $applications = $this->getDoctrine()->getRepository('App:Application')->findAll();
 
-        return $this->view(compact('applications'));
+        $view = $this->view(compact('applications'));
+        $view->getContext()->addGroup('application_list');
+
+        return $view;
     }
 
     /**
@@ -34,7 +37,10 @@ class ApplicationController extends AbstractFOSRestController
      */
     public function getApplication(Application $application): View
     {
-        return $this->view(compact('application'));
+        $view = $this->view(compact('application'));
+        $view->getContext()->addGroup('application_view');
+
+        return $view;
     }
 
     /**

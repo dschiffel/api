@@ -127,4 +127,22 @@ class Application
 
         return $this;
     }
+
+    public function getValues()
+    {
+        $values = [];
+
+        foreach ($this->getAttributes() as $attribute) {
+            $attrValues = $attribute->getValueList();
+
+            $vals = [];
+            foreach ($attrValues as $attrValue) {
+                $vals[$attrValue->getEnvironment()->getTitle()] = $attrValue->getValue();
+            }
+
+            $values[$attribute->getTitle()] = $vals;
+        }
+
+        return $values;
+    }
 }

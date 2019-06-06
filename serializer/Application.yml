@@ -4,6 +4,23 @@ App\Entity\Application:
         id:
             expose: true
             type: int
+            groups: ['application_list', 'application_view']
         title:
             expose: true
             type: string
+            groups: ['application_list', 'application_view']
+        environments:
+            expose: true
+            type: array
+            groups: ['application_view']
+        attributes:
+            expose: true
+            type: array
+            groups: ['application_view']
+
+    virtual_properties:
+        getValues:
+            name: values
+            expose: true
+            type: array
+            groups: ['application_view']

@@ -1,0 +1,9 @@
+App\Entity\Value:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            type: int
+        value:
+            expose: true
+            type: string

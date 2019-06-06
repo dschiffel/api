@@ -4,8 +4,8 @@ App\Entity\Environment:
         id:
             expose: true
             type: int
-        application:
-            expose: true
+            groups: ['application_view']
         title:
             expose: true
             type: string
+            groups: ['application_view']
