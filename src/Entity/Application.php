@@ -24,12 +24,22 @@ class Application
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Environment", mappedBy="application", orphanRemoval=true)
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Environment",
+     *     mappedBy="application",
+     *     orphanRemoval=true,
+     *     cascade={"persist", "remove"}
+     * )
      */
     private $environments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Attribute", mappedBy="application", orphanRemoval=true)
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Attribute",
+     *     mappedBy="application",
+     *     orphanRemoval=true,
+     *     cascade={"persist", "remove"}
+     * )
      */
     private $attributes;
 
