@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Application;
+use App\DTO\ApplicationDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,7 +43,7 @@ class ApplicationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Application::class,
+            'data_class' => ApplicationDTO::class,
         ]);
     }
 }

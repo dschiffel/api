@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Application;
 use App\Entity\Value;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -19,32 +20,21 @@ class ValueRepository extends ServiceEntityRepository
         parent::__construct($registry, Value::class);
     }
 
-    // /**
-    //  * @return Value[] Returns an array of Value objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param Application $application
+     * @return Value[]
+     */
+    public function findApplicationValues(Application $application)
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('v');
 
-    /*
-    public function findOneBySomeField($value): ?Value
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
+        return $qb->select('v', 'env', 'attr')
+            ->innerJoin('v.environment', 'env')
+            ->innerJoin('v.attribute', 'attr')
+            ->where('env.application = :application')
+            ->andWhere('attr.application = :application')
+            ->setParameter('application', $application)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

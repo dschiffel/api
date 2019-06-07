@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\DTO\ApplicationDTO;
+use App\DTO\Assembler\ApplicationAssembler;
 use App\Entity\Application;
 use App\Form\ApplicationType;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -16,13 +18,18 @@ class ApplicationController extends AbstractFOSRestController
     /**
      * @Rest\Get("/applications")
      *
+     * @param ApplicationAssembler $applicationAssembler
      * @return View
      */
-    public function getApplications(): View
+    public function getApplications(ApplicationAssembler $applicationAssembler): View
     {
         $applications = $this->getDoctrine()->getRepository('App:Application')->findAll();
 
-        $view = $this->view(compact('applications'));
+        $applicationDTOs = array_map(function (Application $application) use ($applicationAssembler) {
+            return $applicationAssembler->toDTO($application);
+        }, $applications);
+
+        $view = $this->view(['applications' => $applicationDTOs]);
         $view->getContext()->addGroup('application_list');
 
         return $view;
@@ -33,12 +40,15 @@ class ApplicationController extends AbstractFOSRestController
      * @ParamConverter("application", options={"id"="app_id"})
      *
      * @param Application $application
+     * @param ApplicationAssembler $applicationAssembler
      * @return View
      */
-    public function getApplication(Application $application): View
+    public function getApplication(Application $application, ApplicationAssembler $applicationAssembler): View
     {
-        $view = $this->view(compact('application'));
-        $view->getContext()->addGroup('application_view');
+        $applicationDTO = $applicationAssembler->toDTO($application);
+
+        $view = $this->view(['application' => $applicationDTO]);
+        $view->getContext()->addGroup('application_view')->setSerializeNull(true);
 
         return $view;
     }
@@ -47,16 +57,19 @@ class ApplicationController extends AbstractFOSRestController
      * @Rest\Post("/applications")
      *
      * @param Request $request
+     * @param ApplicationAssembler $applicationAssembler
      * @return View
      */
-    public function createApplication(Request $request): View
+    public function createApplication(ApplicationAssembler $applicationAssembler, Request $request): View
     {
-        $application = new Application();
-        $form = $this->createForm(ApplicationType::class, $application);
+        $applicationDTO = new ApplicationDTO();
+        $form = $this->createForm(ApplicationType::class, $applicationDTO);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $application = $applicationAssembler->fromDTO($applicationDTO);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
             $em->flush();
@@ -77,6 +90,7 @@ class ApplicationController extends AbstractFOSRestController
      */
     public function updateApplication(Application $application, Request $request): View
     {
+        throw new \Exception('To be implemented');
         $form = $this->createForm(ApplicationType::class, $application, ['method' => 'PUT']);
 
         $form->handleRequest($request);

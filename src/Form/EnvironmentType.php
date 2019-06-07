@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Environment;
+use App\DTO\EnvironmentDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +21,7 @@ class EnvironmentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Environment::class,
+            'data_class' => EnvironmentDTO::class,
         ]);
     }
 }
