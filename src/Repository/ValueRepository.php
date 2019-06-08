@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Application;
+use App\Entity\Attribute;
 use App\Entity\Value;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -21,19 +21,18 @@ class ValueRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Application $application
+     * @param Attribute $attribute
      * @return Value[]
      */
-    public function findApplicationValues(Application $application)
+    public function findValuesForAttribute(Attribute $attribute)
     {
         $qb = $this->createQueryBuilder('v');
 
-        return $qb->select('v', 'env', 'attr')
+        return $qb->select('v', 'attr', 'env')
             ->innerJoin('v.environment', 'env')
             ->innerJoin('v.attribute', 'attr')
-            ->where('env.application = :application')
-            ->andWhere('attr.application = :application')
-            ->setParameter('application', $application)
+            ->where('attr = :attribute')
+            ->setParameter('attribute', $attribute)
             ->getQuery()
             ->getResult();
     }

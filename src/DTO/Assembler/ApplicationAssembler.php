@@ -5,10 +5,6 @@ namespace App\DTO\Assembler;
 use App\DTO\ApplicationDTO;
 use App\DTO\Exception\InvalidArgumentException;
 use App\Entity\Application;
-use App\Entity\Attribute;
-use App\Entity\Environment;
-use App\Entity\Value;
-use App\Repository\ValueRepository;
 
 class ApplicationAssembler implements AssemblerInterface
 {
@@ -23,23 +19,15 @@ class ApplicationAssembler implements AssemblerInterface
     private $attributeAssembler;
 
     /**
-     * @var ValueRepository
-     */
-    private $valueRepository;
-
-    /**
      * @param EnvironmentAssembler $environmentAssembler
      * @param AttributeAssembler $attributeAssembler
-     * @param ValueRepository $valueRepository
      */
     public function __construct(
         EnvironmentAssembler $environmentAssembler,
-        AttributeAssembler $attributeAssembler,
-        ValueRepository $valueRepository
+        AttributeAssembler $attributeAssembler
     ) {
         $this->environmentAssembler = $environmentAssembler;
         $this->attributeAssembler = $attributeAssembler;
-        $this->valueRepository = $valueRepository;
     }
 
     /**
@@ -97,43 +85,6 @@ class ApplicationAssembler implements AssemblerInterface
             }
         }
 
-        $applicationDTO->valueMap = $this->getValueMap($entity);
-
         return $applicationDTO;
-    }
-
-    /**
-     * @param Application $application
-     * @return array
-     */
-    private function getValueMap(Application $application)
-    {
-        $valueMap = [];
-        $environments = $application->getEnvironments();
-        $attributes = $application->getAttributes();
-        $values = $this->valueRepository->findApplicationValues($application);
-
-        /**
-         * @param Environment $environment
-         * @param Attribute $attribute
-         * @return string|null
-         */
-        $search = function (Environment $environment, Attribute $attribute) use ($values) {
-            foreach ($values as $value) {
-                if ($value->getEnvironment() === $environment && $value->getAttribute() === $attribute) {
-                    return $value->getValue();
-                }
-            }
-
-            return null;
-        };
-
-        foreach ($environments as $environment) {
-            foreach ($attributes as $attribute) {
-                $valueMap[$attribute->getTitle()][$environment->getTitle()] = $search($environment, $attribute);
-            }
-        }
-
-        return $valueMap;
     }
 }

@@ -4,7 +4,7 @@ namespace App\DTO;
 
 use JMS\Serializer\Annotation as Serializer;
 
-class AttributeDTO
+class ValueDTO
 {
     /**
      * @Serializer\Type("integer")
@@ -20,13 +20,5 @@ class AttributeDTO
      *
      * @var string
      */
-    public $title;
-
-    /**
-     * @Serializer\Type("array<string, App\DTO\ValueDTO>")
-     * @Serializer\Groups({"application_view"})
-     *
-     * @var ValueDTO[]
-     */
-    public $values;
+    public $value;
 }

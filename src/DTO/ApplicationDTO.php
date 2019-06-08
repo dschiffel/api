@@ -37,13 +37,4 @@ class ApplicationDTO
      * @var AttributeDTO[]
      */
     public $attributes;
-
-    /**
-     * @Serializer\ReadOnly()
-     * @Serializer\Type("array<string, array<string, string>>")
-     * @Serializer\Groups({"application_view"})
-     *
-     * @var array
-     */
-    public $valueMap;
 }
