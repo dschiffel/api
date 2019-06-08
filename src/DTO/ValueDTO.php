@@ -15,6 +15,20 @@ class ValueDTO
     public $id;
 
     /**
+     * @Serializer\Type("integer")
+     *
+     * @var int
+     */
+    public $environmentId;
+
+    /**
+     * @Serializer\Type("integer")
+     *
+     * @var int
+     */
+    public $attributeId;
+
+    /**
      * @Serializer\Type("string")
      * @Serializer\Groups({"application_view"})
      *

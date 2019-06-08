@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ValueRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Value
 {
@@ -89,5 +90,14 @@ class Value
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setDefaults()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }
