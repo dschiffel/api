@@ -30,7 +30,7 @@ class ValueDTO
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"application_view"})
+     * @Serializer\Groups({"application_view", "value_edit"})
      *
      * @var string
      */

@@ -8,6 +8,6 @@ class ExceptionController
 {
     public function showAction()
     {
-        return new JsonResponse(['error' => null]);
+        return new JsonResponse(['error' => null]); // todo customise
     }
 }

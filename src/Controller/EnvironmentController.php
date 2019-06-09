@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 class EnvironmentController extends AbstractFOSRestController
 {
     /**
-     * @Rest\Get("/applications/{app_id}/environments")
+     * @Rest\Get("/apps/{app_id}/envs")
      * @ParamConverter("application", options={"id"="app_id"})
      *
      * @param Application $application
@@ -33,7 +33,7 @@ class EnvironmentController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Get("/applications/{app_id}/environments/{env_id}")
+     * @Rest\Get("/apps/{app_id}/envs/{env_id}")
      * @ParamConverter("application", options={"id"="app_id"})
      * @ParamConverter("environment", options={"id"="env_id"})
      *
@@ -47,7 +47,7 @@ class EnvironmentController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Post("/applications/{app_id}/environments")
+     * @Rest\Post("/apps/{app_id}/envs")
      * @ParamConverter("application", options={"id"="app_id"})
      *
      * @param Application $application
@@ -74,7 +74,7 @@ class EnvironmentController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Put("/applications/{app_id}/environments/{env_id}")
+     * @Rest\Put("/apps/{app_id}/envs/{env_id}")
      * @ParamConverter("application", options={"id"="app_id"})
      * @ParamConverter("environment", options={"id"="env_id"})
      *
@@ -100,7 +100,7 @@ class EnvironmentController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Delete("/applications/{app_id}/environments/{env_id}")
+     * @Rest\Delete("/apps/{app_id}/envs/{env_id}")
      * @ParamConverter("application", options={"id"="app_id"})
      * @ParamConverter("environment", options={"id"="env_id"})
      *

@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 class ApplicationController extends AbstractFOSRestController
 {
     /**
-     * @Rest\Get("/applications")
+     * @Rest\Get("/apps")
      *
      * @param ApplicationAssembler $applicationAssembler
      * @return View
@@ -36,7 +36,7 @@ class ApplicationController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Get("/applications/{app_id}")
+     * @Rest\Get("/apps/{app_id}")
      * @ParamConverter("application", options={"id"="app_id"})
      *
      * @param Application $application
@@ -54,7 +54,7 @@ class ApplicationController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Post("/applications")
+     * @Rest\Post("/apps")
      *
      * @param Request $request
      * @param ApplicationAssembler $applicationAssembler
@@ -74,14 +74,14 @@ class ApplicationController extends AbstractFOSRestController
             $em->persist($application);
             $em->flush();
 
-            return $this->view();
+            return $this->view(); // todo return application dto
         }
 
         throw new UnprocessableEntityHttpException(); // todo return form errors
     }
 
     /**
-     * @Rest\Put("/applications/{app_id}")
+     * @Rest\Put("/apps/{app_id}")
      * @ParamConverter("application", options={"id"="app_id"})
      *
      * @param Application $application
@@ -106,7 +106,7 @@ class ApplicationController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Delete("/applications/{app_id}")
+     * @Rest\Delete("/apps/{app_id}")
      * @ParamConverter("application", options={"id"="app_id"})
      *
      * @param Application $application

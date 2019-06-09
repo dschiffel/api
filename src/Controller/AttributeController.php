@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 class AttributeController extends AbstractFOSRestController
 {
     /**
-     * @Rest\Get("/applications/{app_id}/attributes")
+     * @Rest\Get("/apps/{app_id}/attrs")
      * @ParamConverter("application", options={"id"="app_id"})
      *
      * @param Application $application
@@ -29,7 +29,7 @@ class AttributeController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Get("/applications/{app_id}/attributes/{attr_id}")
+     * @Rest\Get("/apps/{app_id}/attrs/{attr_id}")
      * @ParamConverter("application", options={"id"="app_id"})
      * @ParamConverter("attribute", options={"id"="attr_id"})
      *
@@ -43,7 +43,7 @@ class AttributeController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Post("/applications/{app_id}/attributes")
+     * @Rest\Post("/apps/{app_id}/attrs")
      * @ParamConverter("application", options={"id"="app_id"})
      *
      * @param Application $application
@@ -70,7 +70,7 @@ class AttributeController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Put("/applications/{app_id}/attributes/{attr_id}")
+     * @Rest\Put("/apps/{app_id}/attrs/{attr_id}")
      * @ParamConverter("application", options={"id"="app_id"})
      * @ParamConverter("attribute", options={"id"="attr_id"})
      *
@@ -96,7 +96,7 @@ class AttributeController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Delete("/applications/{app_id}/attributes/{attr_id}")
+     * @Rest\Delete("/apps/{app_id}/attrs/{attr_id}")
      * @ParamConverter("application", options={"id"="app_id"})
      * @ParamConverter("attribute", options={"id"="attr_id"})
      *
