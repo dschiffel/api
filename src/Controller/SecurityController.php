@@ -28,7 +28,7 @@ class SecurityController extends AbstractFOSRestController
 
         $createdAt = new \DateTimeImmutable();
         $expiresAt = $createdAt->modify('+30 days');
-        $token = base64_encode(random_bytes(64));
+        $token = $this->genAccessToken();
 
         $accessToken = new AccessToken();
         $accessToken
@@ -41,5 +41,37 @@ class SecurityController extends AbstractFOSRestController
         $em->flush();
 
         return $this->view(['access_token' => $accessToken->getToken()]);
+    }
+
+    /**
+     * Generates an unique access token.
+     *
+     * Implementing classes may want to override this function to implement
+     * other access token generation schemes.
+     *
+     * @return string An unique access token.
+     *
+     * @ingroup oauth2_section_4
+     * @see     OAuth2::genAuthCode()
+     */
+    protected function genAccessToken()
+    {
+        if (@file_exists('/dev/urandom')) { // Get 100 bytes of random data
+            $randomData = file_get_contents('/dev/urandom', false, null, 0, 100);
+        } elseif (function_exists('openssl_random_pseudo_bytes')) { // Get 100 bytes of pseudo-random data
+            $bytes = openssl_random_pseudo_bytes(100, $strong);
+            if (true === $strong && false !== $bytes) {
+                $randomData = $bytes;
+            }
+        }
+        // Last resort: mt_rand
+        if (empty($randomData)) { // Get 108 bytes of (pseudo-random, insecure) data
+            $randomData = mt_rand() . mt_rand() . mt_rand() . uniqid(mt_rand(), true) . microtime(true) . uniqid(
+                    mt_rand(),
+                    true
+                );
+        }
+
+        return rtrim(strtr(base64_encode(hash('sha256', $randomData)), '+/', '-_'), '=');
     }
 }

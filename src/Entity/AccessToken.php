@@ -89,4 +89,9 @@ class AccessToken
 
         return $this;
     }
+
+    public function hasExpired()
+    {
+        return $this->expiresAt <= new \DateTime();
+    }
 }

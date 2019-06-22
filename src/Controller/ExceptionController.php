@@ -3,11 +3,17 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class ExceptionController
 {
-    public function showAction()
+    /**
+     * @param Request $request
+     * @param \Throwable $exception
+     * @return JsonResponse
+     */
+    public function showAction(Request $request, \Throwable $exception)
     {
-        return new JsonResponse(['error' => null]); // todo customise
+        return new JsonResponse(['error' => $exception->getMessage()]);
     }
 }
