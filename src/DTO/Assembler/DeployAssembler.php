@@ -5,6 +5,7 @@ namespace App\DTO\Assembler;
 use App\DTO\DeployDTO;
 use App\DTO\Exception\InvalidArgumentException;
 use App\Entity\Deploy;
+use App\Repository\EnvironmentRepository;
 
 class DeployAssembler implements AssemblerInterface
 {
@@ -12,12 +13,16 @@ class DeployAssembler implements AssemblerInterface
 
     private $deployAttributeAssembler;
 
+    private $environmentRepository;
+
     public function __construct(
         EnvironmentAssembler $environmentAssembler,
-        DeployAttributeAssembler $deployAttributeAssembler
+        DeployAttributeAssembler $deployAttributeAssembler,
+        EnvironmentRepository $environmentRepository
     ) {
         $this->environmentAssembler = $environmentAssembler;
         $this->deployAttributeAssembler = $deployAttributeAssembler;
+        $this->environmentRepository = $environmentRepository;
     }
 
     public function fromDTO($object, $target = null)
@@ -30,7 +35,13 @@ class DeployAssembler implements AssemblerInterface
             $target = new Deploy();
         }
 
-        $target->setEnvironment($this->environmentAssembler->fromDTO($object->environment));
+        if (is_string($object->environment)) {
+            // todo scope with application
+            $environment = $this->environmentRepository->findOneBy(['title' => $object->environment]);
+        } else {
+            $environment = $this->environmentAssembler->fromDTO($object->environment);
+        }
+        $target->setEnvironment($environment);
         if ($object->deployAttributes) {
             foreach ($object->deployAttributes as $deployAttributeDTO) {
                 $target->addDeployeAttribute($this->deployAttributeAssembler->fromDTO($deployAttributeDTO));

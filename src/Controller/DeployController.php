@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\DTO\Assembler\DeployAssembler;
+use App\DTO\DeployDTO;
+use App\Form\DeployType;
 use App\Repository\DeployRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class DeployController extends AbstractFOSRestController
 {
@@ -32,8 +36,22 @@ class DeployController extends AbstractFOSRestController
     /**
      * @Rest\Post("/deploys/")
      */
-    public function postDeployAction(): View
+    public function postDeployAction(Request $request, DeployAssembler $deployAssembler): View
     {
-        return $this->view();
+        $deployDTO = new DeployDTO();
+        $form = $this->createForm(DeployType::class, $deployDTO);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $deploy = $deployAssembler->fromDTO($deployDTO);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($deploy);
+            $em->flush();
+
+            return $this->view(); // todo return deploy dto
+        }
+
+        throw new UnprocessableEntityHttpException(); // todo return form errors
     }
 }
