@@ -14,6 +14,7 @@ class DeployController extends AbstractFOSRestController
      */
     public function getDeploysAction(DeployRepository $deployRepository): View
     {
+        // todo use pagination, order by
         $deploys = $deployRepository->findAll();
 
         $view = $this->view(['deploys' => $deploys]);

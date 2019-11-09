@@ -1,19 +1,19 @@
-App\Entity\Deploy:
+App\Entity\DeployAttribute:
     exclusion_policy: ALL
     properties:
         id:
             expose: true
             type: int
             groups: ['deploy_list']
-        environment:
+        deploy:
             expose: true
-            type: App\Entity\Environment
+            type: App\Entity\Deploy
+            groups: []
+        attribute:
+            expose: true
+            type: App\Entity\Attribute
             groups: ['deploy_list']
-        deployAttributes:
+        value:
             expose: true
-            type: array
-            groups: ['deploy_list']
-        createdAt:
-            expose: true
-            type: datetime
+            type: string
             groups: ['deploy_list']

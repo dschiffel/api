@@ -4,3 +4,7 @@ jms_serializer:
             format_output: '%kernel.debug%'
     metadata:
         auto_detection: false
+        directories:
+            root:
+                namespace_prefix: "App\\Entity\\"
+                path: "%kernel.project_dir%/serializer"

@@ -17,10 +17,10 @@ class DeployAttribute
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Deploy", inversedBy="releaseAttributes")
+     * @ORM\ManyToOne(targetEntity="Deploy", inversedBy="deployAttributes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $rel;
+    private $deploy;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Attribute")
@@ -38,14 +38,14 @@ class DeployAttribute
         return $this->id;
     }
 
-    public function getRel(): ?Deploy
+    public function getDeploy(): ?Deploy
     {
-        return $this->rel;
+        return $this->deploy;
     }
 
-    public function setRel(?Deploy $rel): self
+    public function setDeploy(?Deploy $deploy): self
     {
-        $this->rel = $rel;
+        $this->deploy = $deploy;
 
         return $this;
     }

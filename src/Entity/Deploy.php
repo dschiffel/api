@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DeployRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Deploy
 {
@@ -30,13 +31,13 @@ class Deploy
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="DeployAttribute", mappedBy="rel")
+     * @ORM\OneToMany(targetEntity="DeployAttribute", mappedBy="deploy")
      */
-    private $releaseAttributes;
+    private $deployAttributes;
 
     public function __construct()
     {
-        $this->releaseAttributes = new ArrayCollection();
+        $this->deployAttributes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,31 +72,41 @@ class Deploy
     /**
      * @return Collection|DeployAttribute[]
      */
-    public function getReleaseAttributes(): Collection
+    public function getDeployAttributes(): Collection
     {
-        return $this->releaseAttributes;
+        return $this->deployAttributes;
     }
 
-    public function addReleaseAttribute(DeployAttribute $releaseAttribute): self
+    public function addDeployeAttribute(DeployAttribute $deployAttribute): self
     {
-        if (!$this->releaseAttributes->contains($releaseAttribute)) {
-            $this->releaseAttributes[] = $releaseAttribute;
-            $releaseAttribute->setRel($this);
+        if (!$this->deployAttributes->contains($deployAttribute)) {
+            $this->deployAttributes[] = $deployAttribute;
+            $deployAttribute->setDeploy($this);
         }
 
         return $this;
     }
 
-    public function removeReleaseAttribute(DeployAttribute $releaseAttribute): self
+    public function removeDeployeAttribute(DeployAttribute $deployAttribute): self
     {
-        if ($this->releaseAttributes->contains($releaseAttribute)) {
-            $this->releaseAttributes->removeElement($releaseAttribute);
+        if ($this->deployAttributes->contains($deployAttribute)) {
+            $this->deployAttributes->removeElement($deployAttribute);
             // set the owning side to null (unless already changed)
-            if ($releaseAttribute->getRel() === $this) {
-                $releaseAttribute->setRel(null);
+            if ($deployAttribute->getDeploy() === $this) {
+                $deployAttribute->setDeploy(null);
             }
         }
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new \DateTime();
+        }
     }
 }
