@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DTO\Assembler\DeployAssembler;
 use App\Repository\DeployRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -12,12 +13,17 @@ class DeployController extends AbstractFOSRestController
     /**
      * @Rest\Get("/deploys/")
      */
-    public function getDeploysAction(DeployRepository $deployRepository): View
+    public function getDeploysAction(DeployRepository $deployRepository, DeployAssembler $deployAssembler): View
     {
         // todo use pagination, order by
         $deploys = $deployRepository->findAll();
 
-        $view = $this->view(['deploys' => $deploys]);
+        $deployDTOs = [];
+        foreach ($deploys as $deploy) {
+            $deployDTOs[] = $deployAssembler->toDTO($deploy);
+        }
+
+        $view = $this->view(['deploys' => $deployDTOs]);
         $view->getContext()->addGroup('deploy_list');
 
         return $view;
