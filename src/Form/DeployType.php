@@ -14,7 +14,15 @@ class DeployType extends AbstractType
     {
         $builder
             ->add('environment')
-            ->add('deployAttributes', CollectionType::class, ['entry_type' => DeployAttributeType::class]);
+            ->add(
+                'deployAttributes',
+                CollectionType::class,
+                [
+                    'entry_type' => DeployAttributeType::class,
+                    'allow_add' => true,
+                    'by_reference' => false,
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

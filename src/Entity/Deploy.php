@@ -31,7 +31,7 @@ class Deploy
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="DeployAttribute", mappedBy="deploy")
+     * @ORM\OneToMany(targetEntity="DeployAttribute", mappedBy="deploy", cascade={"persist"})
      */
     private $deployAttributes;
 
@@ -77,7 +77,7 @@ class Deploy
         return $this->deployAttributes;
     }
 
-    public function addDeployeAttribute(DeployAttribute $deployAttribute): self
+    public function addDeployAttribute(DeployAttribute $deployAttribute): self
     {
         if (!$this->deployAttributes->contains($deployAttribute)) {
             $this->deployAttributes[] = $deployAttribute;
@@ -87,7 +87,7 @@ class Deploy
         return $this;
     }
 
-    public function removeDeployeAttribute(DeployAttribute $deployAttribute): self
+    public function removeDeployAttribute(DeployAttribute $deployAttribute): self
     {
         if ($this->deployAttributes->contains($deployAttribute)) {
             $this->deployAttributes->removeElement($deployAttribute);

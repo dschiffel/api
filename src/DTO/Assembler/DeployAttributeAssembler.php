@@ -3,16 +3,22 @@
 namespace App\DTO\Assembler;
 
 use App\DTO\DeployAttributeDTO;
+use App\DTO\Exception\AssemblerException;
+use App\DTO\Exception\AssemblingException;
 use App\DTO\Exception\InvalidArgumentException;
 use App\Entity\DeployAttribute;
+use App\Repository\AttributeRepository;
 
 class DeployAttributeAssembler implements AssemblerInterface
 {
     private $attributeAssembler;
 
-    public function __construct(AttributeAssembler $attributeAssembler)
+    private $attributeRepository;
+
+    public function __construct(AttributeAssembler $attributeAssembler, AttributeRepository $attributeRepository)
     {
         $this->attributeAssembler = $attributeAssembler;
+        $this->attributeRepository = $attributeRepository;
     }
 
     public function fromDTO($object, $target = null)
@@ -25,7 +31,15 @@ class DeployAttributeAssembler implements AssemblerInterface
             $target = new DeployAttribute();
         }
 
-        $target->setAttribute($this->attributeAssembler->fromDTO($object->attribute));
+        if (is_string($object->attribute)) {
+            $attribute = $this->attributeRepository->findOneBy(['title' => $object->attribute]);
+            if ($attribute === null) {
+                throw new AssemblerException('Attribute not found');
+            }
+        } else {
+            $attribute = $this->attributeAssembler->fromDTO($object->attribute);
+        }
+        $target->setAttribute($attribute);
         $target->setValue($object->value);
 
         return $target;

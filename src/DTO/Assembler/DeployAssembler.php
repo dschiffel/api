@@ -3,6 +3,7 @@
 namespace App\DTO\Assembler;
 
 use App\DTO\DeployDTO;
+use App\DTO\Exception\AssemblerException;
 use App\DTO\Exception\InvalidArgumentException;
 use App\Entity\Deploy;
 use App\Repository\EnvironmentRepository;
@@ -38,13 +39,16 @@ class DeployAssembler implements AssemblerInterface
         if (is_string($object->environment)) {
             // todo scope with application
             $environment = $this->environmentRepository->findOneBy(['title' => $object->environment]);
+            if ($environment === null) {
+                throw new AssemblerException('Environment not found');
+            }
         } else {
             $environment = $this->environmentAssembler->fromDTO($object->environment);
         }
         $target->setEnvironment($environment);
         if ($object->deployAttributes) {
             foreach ($object->deployAttributes as $deployAttributeDTO) {
-                $target->addDeployeAttribute($this->deployAttributeAssembler->fromDTO($deployAttributeDTO));
+                $target->addDeployAttribute($this->deployAttributeAssembler->fromDTO($deployAttributeDTO));
             }
         }
 
