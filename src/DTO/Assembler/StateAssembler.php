@@ -5,29 +5,17 @@ namespace App\DTO\Assembler;
 use App\DTO\Exception\InvalidArgumentException;
 use App\DTO\StateDTO;
 use App\Entity\State;
-use App\Repository\AttributeRepository;
-use App\Repository\EnvironmentRepository;
 
 class StateAssembler implements AssemblerInterface
 {
-    /**
-     * @var EnvironmentRepository
-     */
-    private $environmentRepository;
+    private $environmentAssembler;
 
-    /**
-     * @var AttributeRepository
-     */
-    private $attributeRepository;
+    private $attributeAssembler;
 
-    /**
-     * @param EnvironmentRepository $environmentRepository
-     * @param AttributeRepository $attributeRepository
-     */
-    public function __construct(EnvironmentRepository $environmentRepository, AttributeRepository $attributeRepository)
+    public function __construct(EnvironmentAssembler $environmentAssembler, AttributeAssembler $attributeAssembler)
     {
-        $this->environmentRepository = $environmentRepository;
-        $this->attributeRepository = $attributeRepository;
+        $this->environmentAssembler = $environmentAssembler;
+        $this->attributeAssembler = $attributeAssembler;
     }
 
     /**
@@ -44,11 +32,11 @@ class StateAssembler implements AssemblerInterface
         }
 
         $target->setValue($object->value);
-        if ($object->environmentId) {
-            $target->setEnvironment($this->environmentRepository->find($object->environmentId));
+        if ($object->environment) {
+            $target->setEnvironment($this->environmentAssembler->fromDTO($object->environment));
         }
         if ($object->attributeId) {
-            $target->setAttribute($this->attributeRepository->find($object->attributeId));
+            $target->setAttribute($this->attributeAssembler->fromDTO($object->attribute));
         }
 
         return $target;
@@ -63,13 +51,13 @@ class StateAssembler implements AssemblerInterface
             throw new InvalidArgumentException(sprintf('%s expected', State::class));
         }
 
-        $valueDTO = new StateDTO();
+        $stateDTO = new StateDTO();
 
-        $valueDTO->id = $entity->getId();
-        $valueDTO->value = $entity->getValue();
-        $valueDTO->environmentId = $entity->getEnvironment()->getId();
-        $valueDTO->attributeId = $entity->getAttribute()->getId();
+        $stateDTO->id = $entity->getId();
+        $stateDTO->value = $entity->getValue();
+        $stateDTO->environment = $this->environmentAssembler->toDTO($entity->getEnvironment());
+        $stateDTO->attribute = $this->attributeAssembler->toDTO($entity->getAttribute());
 
-        return $valueDTO;
+        return $stateDTO;
     }
 }

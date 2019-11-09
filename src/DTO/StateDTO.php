@@ -8,29 +8,31 @@ class StateDTO
 {
     /**
      * @Serializer\Type("integer")
-     * @Serializer\Groups({"state_view"})
+     * @Serializer\Groups({"state_list"})
      *
      * @var int
      */
     public $id;
 
     /**
-     * @Serializer\Type("integer")
+     * @Serializer\Type("App\DTO\AttributeDTO")
+     * @Serializer\Groups({"state_list"})
      *
      * @var int
      */
-    public $environmentId;
+    public $environment;
 
     /**
-     * @Serializer\Type("integer")
+     * @Serializer\Type("App\DTO\AttributeDTO")
+     * @Serializer\Groups({"state_list"})
      *
      * @var int
      */
-    public $attributeId;
+    public $attribute;
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"state_view", "value_edit"})
+     * @Serializer\Groups({"state_list"})
      *
      * @var string
      */

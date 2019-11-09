@@ -8,7 +8,7 @@ class AttributeDTO
 {
     /**
      * @Serializer\Type("integer")
-     * @Serializer\Groups({"state_view"})
+     * @Serializer\Groups({"state_list"})
      *
      * @var int
      */
@@ -16,17 +16,9 @@ class AttributeDTO
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"state_view"})
+     * @Serializer\Groups({"state_list"})
      *
      * @var string
      */
     public $title;
-
-    /**
-     * @Serializer\Type("array<string, App\DTO\ValueDTO>")
-     * @Serializer\Groups({"state_view"})
-     *
-     * @var StateDTO[]
-     */
-    public $values;
 }

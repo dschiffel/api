@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\DTO\Assembler\AttributeAssembler;
 use App\DTO\Assembler\EnvironmentAssembler;
+use App\DTO\Assembler\StateAssembler;
+use App\Entity\Attribute;
 use App\Entity\Environment;
 use App\Entity\State;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,12 +20,34 @@ class StateController extends AbstractFOSRestController
     public function getStatesAction(
         EntityManagerInterface $em,
         EnvironmentAssembler $environmentAssembler,
-        AttributeAssembler $attributeAssembler
+        AttributeAssembler $attributeAssembler,
+        StateAssembler $stateAssembler
     ) {
         $environments = $em->getRepository(Environment::class)->findAll();
-        $attributes = $em->getRepository(Environment::class)->findAll();
-        $states = $em->getRepository(State::class)->findAll();
+        $environmentDTOs = [];
+        foreach ($environments as $environment) {
+            $environmentDTOs[] = $environmentAssembler->toDTO($environment);
+        }
 
-        // todo continue with changing StateDTO and StateAssembler
+        $attributes = $em->getRepository(Attribute::class)->findAll();
+        $attributeDTOs = [];
+        foreach ($attributes as $attribute) {
+            $attributeDTOs[] = $attributeAssembler->toDTO($attribute);
+        }
+
+        $states = $em->getRepository(State::class)->findAll();
+        $stateDTOs = [];
+        foreach ($states as $state) {
+            $stateDTOs[] = $stateAssembler->toDTO($state);
+        }
+
+        $view = $this->view([
+            'environments' => $environmentDTOs,
+            'attributes' => $attributeDTOs,
+            'states' => $stateDTOs,
+        ]);
+        $view->getContext()->addGroup('state_list');
+
+        return $view;
     }
 }
