@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DeployRepository")
+ * @ORM\EntityListeners({"App\EntityListener\DeployListener"})
  * @ORM\HasLifecycleCallbacks()
  */
 class Deploy
