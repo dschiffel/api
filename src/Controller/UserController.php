@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class UserController extends AbstractFOSRestController
 {
     /**
-     * @Rest\Get("/user")
+     * @Rest\Get("/user/")
      *
      * @param TokenStorageInterface $tokenStorage
      * @param UserAssembler $userAssembler

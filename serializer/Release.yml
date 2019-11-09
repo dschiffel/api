@@ -1,0 +1,13 @@
+App\Entity\Release:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            type: int
+        environment:
+            expose: true
+            type: App\Entity\Environment
+            groups:
+        value:
+            expose: true
+            type: string
