@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ReleaseRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DeployRepository")
  */
-class Release
+class Deploy
 {
     /**
      * @ORM\Id()
@@ -30,7 +30,7 @@ class Release
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ReleaseAttribute", mappedBy="rel")
+     * @ORM\OneToMany(targetEntity="DeployAttribute", mappedBy="rel")
      */
     private $releaseAttributes;
 
@@ -69,14 +69,14 @@ class Release
     }
 
     /**
-     * @return Collection|ReleaseAttribute[]
+     * @return Collection|DeployAttribute[]
      */
     public function getReleaseAttributes(): Collection
     {
         return $this->releaseAttributes;
     }
 
-    public function addReleaseAttribute(ReleaseAttribute $releaseAttribute): self
+    public function addReleaseAttribute(DeployAttribute $releaseAttribute): self
     {
         if (!$this->releaseAttributes->contains($releaseAttribute)) {
             $this->releaseAttributes[] = $releaseAttribute;
@@ -86,7 +86,7 @@ class Release
         return $this;
     }
 
-    public function removeReleaseAttribute(ReleaseAttribute $releaseAttribute): self
+    public function removeReleaseAttribute(DeployAttribute $releaseAttribute): self
     {
         if ($this->releaseAttributes->contains($releaseAttribute)) {
             $this->releaseAttributes->removeElement($releaseAttribute);

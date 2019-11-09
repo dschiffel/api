@@ -1,4 +1,4 @@
-App\Entity\Release:
+App\Entity\Deploy:
     exclusion_policy: ALL
     properties:
         id:

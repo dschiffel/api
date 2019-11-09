@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ReleaseAttributeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DeployAttributeRepository")
  */
-class ReleaseAttribute
+class DeployAttribute
 {
     /**
      * @ORM\Id()
@@ -17,7 +17,7 @@ class ReleaseAttribute
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Release", inversedBy="releaseAttributes")
+     * @ORM\ManyToOne(targetEntity="Deploy", inversedBy="releaseAttributes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $rel;
@@ -38,12 +38,12 @@ class ReleaseAttribute
         return $this->id;
     }
 
-    public function getRel(): ?Release
+    public function getRel(): ?Deploy
     {
         return $this->rel;
     }
 
-    public function setRel(?Release $rel): self
+    public function setRel(?Deploy $rel): self
     {
         $this->rel = $rel;
 

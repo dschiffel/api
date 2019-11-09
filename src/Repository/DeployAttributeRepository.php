@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Release;
+use App\Entity\DeployAttribute;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Release|null find($id, $lockMode = null, $lockVersion = null)
- * @method Release|null findOneBy(array $criteria, array $orderBy = null)
- * @method Release[]    findAll()
- * @method Release[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method DeployAttribute|null find($id, $lockMode = null, $lockVersion = null)
+ * @method DeployAttribute|null findOneBy(array $criteria, array $orderBy = null)
+ * @method DeployAttribute[]    findAll()
+ * @method DeployAttribute[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReleaseRepository extends ServiceEntityRepository
+class DeployAttributeRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Release::class);
+        parent::__construct($registry, DeployAttribute::class);
     }
 
     // /**
-    //  * @return Release[] Returns an array of Release objects
+    //  * @return ReleaseAttribute[] Returns an array of ReleaseAttribute objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ReleaseRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Release
+    public function findOneBySomeField($value): ?ReleaseAttribute
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.exampleField = :val')
