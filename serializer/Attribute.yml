@@ -4,8 +4,8 @@ App\Entity\Attribute:
         id:
             expose: true
             type: int
-            groups: ['application_view']
+            groups: ['state_view']
         title:
             expose: true
             type: string
-            groups: ['application_view']
+            groups: ['state_view']

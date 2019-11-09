@@ -3,12 +3,12 @@
 namespace App\DTO\Assembler;
 
 use App\DTO\Exception\InvalidArgumentException;
-use App\DTO\ValueDTO;
+use App\DTO\StateDTO;
 use App\Entity\Value;
 use App\Repository\AttributeRepository;
 use App\Repository\EnvironmentRepository;
 
-class ValueAssembler implements AssemblerInterface
+class StateAssembler implements AssemblerInterface
 {
     /**
      * @var EnvironmentRepository
@@ -35,8 +35,8 @@ class ValueAssembler implements AssemblerInterface
      */
     public function fromDTO($object, $target = null)
     {
-        if (!$object instanceof ValueDTO) {
-            throw new InvalidArgumentException(sprintf('%s expected', ValueDTO::class));
+        if (!$object instanceof StateDTO) {
+            throw new InvalidArgumentException(sprintf('%s expected', StateDTO::class));
         }
 
         if ($target === null) {
@@ -63,7 +63,7 @@ class ValueAssembler implements AssemblerInterface
             throw new InvalidArgumentException(sprintf('%s expected', Value::class));
         }
 
-        $valueDTO = new ValueDTO();
+        $valueDTO = new StateDTO();
 
         $valueDTO->id = $entity->getId();
         $valueDTO->value = $entity->getValue();

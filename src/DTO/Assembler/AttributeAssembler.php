@@ -5,30 +5,9 @@ namespace App\DTO\Assembler;
 use App\DTO\AttributeDTO;
 use App\DTO\Exception\InvalidArgumentException;
 use App\Entity\Attribute;
-use App\Repository\ValueRepository;
 
 class AttributeAssembler implements AssemblerInterface
 {
-    /**
-     * @var ValueRepository
-     */
-    private $valueRepository;
-
-    /**
-     * @var ValueAssembler
-     */
-    private $valueAssembler;
-
-    /**
-     * @param ValueRepository $valueRepository
-     * @param ValueAssembler $valueAssembler
-     */
-    public function __construct(ValueRepository $valueRepository, ValueAssembler $valueAssembler)
-    {
-        $this->valueRepository = $valueRepository;
-        $this->valueAssembler = $valueAssembler;
-    }
-
     /**
      * @inheritDoc
      */
@@ -60,24 +39,7 @@ class AttributeAssembler implements AssemblerInterface
 
         $attributeDTO->id = $entity->getId();
         $attributeDTO->title = $entity->getTitle();
-        $attributeDTO->values = $this->getValues($entity);
 
         return $attributeDTO;
-    }
-
-    /**
-     * @param Attribute $attribute
-     * @return array
-     */
-    private function getValues(Attribute $attribute)
-    {
-        $values = [];
-        $valueEntities = $this->valueRepository->findValuesForAttribute($attribute);
-
-        foreach ($valueEntities as $valueEntity) {
-            $values[$valueEntity->getEnvironment()->getId()] = $this->valueAssembler->toDTO($valueEntity);
-        }
-
-        return $values;
     }
 }

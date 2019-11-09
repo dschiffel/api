@@ -1,4 +1,4 @@
-App\Entity\Value:
+App\Entity\State:
     exclusion_policy: ALL
     properties:
         id:

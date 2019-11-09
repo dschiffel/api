@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\DTO\Assembler\ValueAssembler;
-use App\DTO\ValueDTO;
+use App\DTO\Assembler\StateAssembler;
+use App\DTO\StateDTO;
 use App\Entity\Attribute;
 use App\Entity\Environment;
 use App\Entity\Value;
@@ -16,18 +16,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
-class ValueController extends AbstractFOSRestController
+class StateController extends AbstractFOSRestController
 {
     /**
      * @Rest\Post("/values")
      *
      * @param Request $request
-     * @param ValueAssembler $valueAssembler
+     * @param StateAssembler $valueAssembler
      * @return View
      */
-    public function setValueAction(Request $request, ValueAssembler $valueAssembler)
+    public function setValueAction(Request $request, StateAssembler $valueAssembler)
     {
-        $valueDTO = new ValueDTO();
+        $valueDTO = new StateDTO();
         $form = $this->createForm(ValueType::class, $valueDTO);
 
         $form->handleRequest($request);
@@ -62,13 +62,13 @@ class ValueController extends AbstractFOSRestController
      *
      * @param Request $request
      * @param ValueRepository $valueRepository
-     * @param ValueAssembler $valueAssembler
+     * @param StateAssembler $valueAssembler
      * @return View
      */
     public function editValueAction(
         Request $request,
         ValueRepository $valueRepository,
-        ValueAssembler $valueAssembler
+        StateAssembler $valueAssembler
     ) {
         $value = $valueRepository->findOneBy([
             'attribute' => $request->query->get('attrId'),

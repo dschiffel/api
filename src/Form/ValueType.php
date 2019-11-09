@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\DTO\ValueDTO;
+use App\DTO\StateDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +26,7 @@ class ValueType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ValueDTO::class,
+            'data_class' => StateDTO::class,
         ]);
     }
 }

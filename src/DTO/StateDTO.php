@@ -4,11 +4,11 @@ namespace App\DTO;
 
 use JMS\Serializer\Annotation as Serializer;
 
-class ValueDTO
+class StateDTO
 {
     /**
      * @Serializer\Type("integer")
-     * @Serializer\Groups({"application_view"})
+     * @Serializer\Groups({"state_view"})
      *
      * @var int
      */
@@ -30,7 +30,7 @@ class ValueDTO
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"application_view", "value_edit"})
+     * @Serializer\Groups({"state_view", "value_edit"})
      *
      * @var string
      */

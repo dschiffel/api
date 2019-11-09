@@ -8,7 +8,7 @@ class EnvironmentDTO
 {
     /**
      * @Serializer\Type("integer")
-     * @Serializer\Groups({"application_view"})
+     * @Serializer\Groups({"state_view"})
      *
      * @var int
      */
@@ -16,7 +16,7 @@ class EnvironmentDTO
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"application_view"})
+     * @Serializer\Groups({"state_view"})
      *
      * @var string
      */
