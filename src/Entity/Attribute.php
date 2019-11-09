@@ -30,7 +30,7 @@ class Attribute
     private $application;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Value", mappedBy="attribute", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="State", mappedBy="attribute", orphanRemoval=true)
      */
     private $valueList;
 
@@ -69,14 +69,14 @@ class Attribute
     }
 
     /**
-     * @return Collection|Value[]
+     * @return Collection|State[]
      */
     public function getValueList(): Collection
     {
         return $this->valueList;
     }
 
-    public function addValueList(Value $valueList): self
+    public function addValueList(State $valueList): self
     {
         if (!$this->valueList->contains($valueList)) {
             $this->valueList[] = $valueList;
@@ -86,7 +86,7 @@ class Attribute
         return $this;
     }
 
-    public function removeValueList(Value $valueList): self
+    public function removeValueList(State $valueList): self
     {
         if ($this->valueList->contains($valueList)) {
             $this->valueList->removeElement($valueList);

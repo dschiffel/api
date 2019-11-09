@@ -4,7 +4,7 @@ namespace App\DTO\Assembler;
 
 use App\DTO\Exception\InvalidArgumentException;
 use App\DTO\StateDTO;
-use App\Entity\Value;
+use App\Entity\State;
 use App\Repository\AttributeRepository;
 use App\Repository\EnvironmentRepository;
 
@@ -40,7 +40,7 @@ class StateAssembler implements AssemblerInterface
         }
 
         if ($target === null) {
-            $target = new Value();
+            $target = new State();
         }
 
         $target->setValue($object->value);
@@ -59,8 +59,8 @@ class StateAssembler implements AssemblerInterface
      */
     public function toDTO($entity)
     {
-        if (!$entity instanceof Value) {
-            throw new InvalidArgumentException(sprintf('%s expected', Value::class));
+        if (!$entity instanceof State) {
+            throw new InvalidArgumentException(sprintf('%s expected', State::class));
         }
 
         $valueDTO = new StateDTO();

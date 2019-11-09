@@ -5,10 +5,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ValueRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\StateRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Value
+class State
 {
     /**
      * @ORM\Id()
