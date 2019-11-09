@@ -18,13 +18,13 @@ class State
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Environment", inversedBy="valueList")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Environment")
      * @ORM\JoinColumn(nullable=false)
      */
     private $environment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Attribute", inversedBy="valueList")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Attribute")
      * @ORM\JoinColumn(nullable=false)
      */
     private $attribute;
