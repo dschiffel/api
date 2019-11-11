@@ -15,7 +15,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 class StateController extends AbstractFOSRestController
 {
     /**
-     * @Rest\Get("/states/")
+     * @Rest\Get("/state/")
      */
     public function getStatesAction(
         EntityManagerInterface $em,

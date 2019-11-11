@@ -8,7 +8,7 @@ class AttributeDTO
 {
     /**
      * @Serializer\Type("integer")
-     * @Serializer\Groups({"state_list"})
+     * @Serializer\Groups({"state_list", "deploy_list"})
      *
      * @var int
      */
@@ -16,7 +16,7 @@ class AttributeDTO
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"state_list"})
+     * @Serializer\Groups({"state_list", "deploy_list"})
      *
      * @var string
      */
