@@ -27,7 +27,7 @@ class DeployController extends AbstractFOSRestController
         $deploysQuery = $deployRepository->getDeployListQuery();
         $deploysPagination = $paginator->paginate(
             $deploysQuery,
-            $request->query->getInt('page', 1),
+            $page = $request->query->getInt('page', 1),
             10
         );
 
@@ -37,6 +37,7 @@ class DeployController extends AbstractFOSRestController
         }
 
         $view = $this->view([
+            'page' => $page,
             'totalCount' => $deploysPagination->getTotalItemCount(),
             'deploys' => $deployDTOs,
         ]);
