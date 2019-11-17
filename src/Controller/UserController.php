@@ -17,12 +17,15 @@ class UserController extends AbstractFOSRestController
      * @param UserAssembler $userAssembler
      * @return View
      */
-    public function getUserAction(TokenStorageInterface $tokenStorage, UserAssembler $userAssembler)
+    public function getAuthenticatedUserAction(TokenStorageInterface $tokenStorage, UserAssembler $userAssembler)
     {
         $user = $tokenStorage->getToken()->getUser();
 
         $userDTO = $userAssembler->toDTO($user);
 
-        return $this->view(['user' => $userDTO]);
+        $view = $this->view(['user' => $userDTO]);
+        $view->getContext()->addGroup('auth_user');
+
+        return $view;
     }
 }

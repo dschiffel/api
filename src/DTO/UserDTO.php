@@ -8,7 +8,7 @@ class UserDTO
 {
     /**
      * @Serializer\Type("integer")
-     * @Serializer\Groups({"user_view"})
+     * @Serializer\Groups({"auth_user"})
      *
      * @var int
      */
@@ -16,7 +16,7 @@ class UserDTO
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"user_view"})
+     * @Serializer\Groups({"auth_user"})
      *
      * @var string
      */
