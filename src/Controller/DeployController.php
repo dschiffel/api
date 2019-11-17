@@ -37,8 +37,11 @@ class DeployController extends AbstractFOSRestController
         }
 
         $view = $this->view([
-            'page' => $page,
-            'totalCount' => $deploysPagination->getTotalItemCount(),
+            'pagination' => [
+                'pageNumber' => $deploysPagination->getCurrentPageNumber(),
+                'pageSize' => $deploysPagination->getItemNumberPerPage(),
+                'totalCount' => $deploysPagination->getTotalItemCount(),
+            ],
             'deploys' => $deployDTOs,
         ]);
         $view->getContext()->addGroup('deploy_list');
