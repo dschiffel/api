@@ -9,6 +9,7 @@ use App\Repository\DeployRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -17,17 +18,28 @@ class DeployController extends AbstractFOSRestController
     /**
      * @Rest\Get("/deploys/")
      */
-    public function getDeploysAction(DeployRepository $deployRepository, DeployAssembler $deployAssembler): View
-    {
-        // todo use pagination
-        $deploys = $deployRepository->findBy([], ['createdAt' => 'desc']);
+    public function getDeploysAction(
+        DeployRepository $deployRepository,
+        DeployAssembler $deployAssembler,
+        PaginatorInterface $paginator,
+        Request $request
+    ): View {
+        $deploysQuery = $deployRepository->getDeployListQuery();
+        $deploysPagination = $paginator->paginate(
+            $deploysQuery,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         $deployDTOs = [];
-        foreach ($deploys as $deploy) {
+        foreach ($deploysPagination as $deploy) {
             $deployDTOs[] = $deployAssembler->toDTO($deploy);
         }
 
-        $view = $this->view(['deploys' => $deployDTOs]);
+        $view = $this->view([
+            'totalCount' => $deploysPagination->getTotalItemCount(),
+            'deploys' => $deployDTOs,
+        ]);
         $view->getContext()->addGroup('deploy_list');
 
         return $view;
