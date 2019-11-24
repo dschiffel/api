@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Security;
 
@@ -21,11 +21,14 @@ class AccessTokenGuardAuthenticator extends AbstractGuardAuthenticator
     private $em;
 
     /**
-     * @param EntityManagerInterface $em
+     * @var string
      */
-    public function __construct(EntityManagerInterface $em)
+    private $appAccessToken;
+
+    public function __construct(EntityManagerInterface $em, string $appAccessToken)
     {
         $this->em = $em;
+        $this->appAccessToken = $appAccessToken;
     }
 
     /**
