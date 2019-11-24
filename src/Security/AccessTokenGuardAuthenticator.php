@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\AccessToken;
+use App\Entity\AppUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,6 +67,10 @@ class AccessTokenGuardAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        if ($this->appAccessToken === $credentials['access_token']) {
+            return new AppUser();
+        }
+
         $accessToken = $this->em->getRepository(AccessToken::class)
             ->findOneBy(['token' => $credentials['access_token']]);
 
