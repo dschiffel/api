@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -17,6 +18,7 @@ class DeployController extends AbstractFOSRestController
 {
     /**
      * @Rest\Get("/deploys/")
+     * @Security("has_role('ROLE_USER')")
      */
     public function getDeploysAction(
         DeployRepository $deployRepository,
@@ -51,6 +53,7 @@ class DeployController extends AbstractFOSRestController
 
     /**
      * @Rest\Post("/deploys/")
+     * @Security("has_role('ROLE_APP')")
      */
     public function postDeployAction(Request $request, DeployAssembler $deployAssembler): View
     {

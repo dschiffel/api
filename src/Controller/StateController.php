@@ -11,11 +11,13 @@ use App\Entity\State;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class StateController extends AbstractFOSRestController
 {
     /**
      * @Rest\Get("/state/")
+     * @Security("has_role('ROLE_USER')")
      */
     public function getStatesAction(
         EntityManagerInterface $em,
