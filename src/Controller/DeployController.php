@@ -11,6 +11,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -55,8 +56,11 @@ class DeployController extends AbstractFOSRestController
      * @Rest\Post("/deploys/")
      * @Security("has_role('ROLE_APP')")
      */
-    public function postDeployAction(Request $request, DeployAssembler $deployAssembler): View
-    {
+    public function postDeployAction(
+        Request $request,
+        DeployAssembler $deployAssembler,
+        EventDispatcherInterface $eventDispatcher
+    ): View {
         $deployDTO = new DeployDTO();
         $form = $this->createForm(DeployType::class, $deployDTO);
         $form->handleRequest($request);

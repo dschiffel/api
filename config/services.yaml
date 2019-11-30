@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     app_access_token: '%env(resolve:APP_ACCESS_TOKEN)%'
+    slack_url: '%env(resolve:SLACK_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -32,3 +33,9 @@ services:
     App\DTO\:
         resource: '../src/DTO'
         exclude: '../src/DTO/{*.php,Exception}'
+
+    App\EntityListener\DeployListener:
+        arguments:
+            - '%slack_url%'
+        tags:
+            - { name: 'doctrine.orm.entity_listener', entity: App\Entity\Deploy, event: postPersist }
