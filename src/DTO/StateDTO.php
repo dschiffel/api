@@ -37,4 +37,12 @@ class StateDTO
      * @var string
      */
     public $value;
+
+    /**
+     * @Serializer\Type("DateTime")
+     * @Serializer\Groups({"state_list"})
+     *
+     * @var \DateTime
+     */
+    public $updatedAt;
 }

@@ -32,10 +32,11 @@ class StateAssembler implements AssemblerInterface
         }
 
         $target->setValue($object->value);
+        $target->setUpdatedAt($object->updatedAt);
         if ($object->environment) {
             $target->setEnvironment($this->environmentAssembler->fromDTO($object->environment));
         }
-        if ($object->attributeId) {
+        if ($object->attribute) {
             $target->setAttribute($this->attributeAssembler->fromDTO($object->attribute));
         }
 
@@ -55,6 +56,7 @@ class StateAssembler implements AssemblerInterface
 
         $stateDTO->id = $entity->getId();
         $stateDTO->value = $entity->getValue();
+        $stateDTO->updatedAt = $entity->getUpdatedAt();
         $stateDTO->environment = $this->environmentAssembler->toDTO($entity->getEnvironment());
         $stateDTO->attribute = $this->attributeAssembler->toDTO($entity->getAttribute());
 
