@@ -8,7 +8,7 @@ class AppUser implements UserInterface
 {
     public function getRoles()
     {
-        return ['ROLE_APP'];
+        return ['ROLE_APP', 'ROLE_USER'];
     }
 
     public function getPassword()
