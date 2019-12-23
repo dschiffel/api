@@ -21,8 +21,12 @@ class UserAssembler implements AssemblerInterface
             $target = new User();
         }
 
-        $target
-            ->setEmail($object->email);
+        if ($object->email !== null) {
+            $target->setEmail($object->email);
+        }
+        if ($object->password !== null) {
+            $target->setPassword($object->password);
+        }
 
         return $target;
     }
