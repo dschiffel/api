@@ -29,6 +29,7 @@ class UserDTO
 
     /**
      * @Assert\NotBlank(groups={"register"})
+     * todo password policy
      * @Serializer\Type("string")
      *
      * @var string
