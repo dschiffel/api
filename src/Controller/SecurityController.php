@@ -46,9 +46,6 @@ class SecurityController extends AbstractFOSRestController
     /**
      * Generates an unique access token.
      *
-     * Implementing classes may want to override this function to implement
-     * other access token generation schemes.
-     *
      * @return string An unique access token.
      *
      * @ingroup oauth2_section_4
