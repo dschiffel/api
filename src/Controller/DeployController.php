@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\DTO\Assembler\DeployAssembler;
 use App\DTO\DeployDTO;
+use App\Exception\FormException;
 use App\Form\DeployType;
 use App\Repository\DeployRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -11,9 +12,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class DeployController extends AbstractFOSRestController
 {
@@ -58,8 +57,7 @@ class DeployController extends AbstractFOSRestController
      */
     public function postDeployAction(
         Request $request,
-        DeployAssembler $deployAssembler,
-        EventDispatcherInterface $eventDispatcher
+        DeployAssembler $deployAssembler
     ): View {
         $deployDTO = new DeployDTO();
         $form = $this->createForm(DeployType::class, $deployDTO);
@@ -75,6 +73,6 @@ class DeployController extends AbstractFOSRestController
             return $this->view(); // todo return deploy dto
         }
 
-        throw new UnprocessableEntityHttpException(); // todo return form errors
+        throw new FormException($form->getErrors(true));
     }
 }
