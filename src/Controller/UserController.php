@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\DTO\Assembler\UserAssembler;
 use App\DTO\UserDTO;
-use App\Form\RegistrationType;
+use App\Exception\FormException;
+use App\Form\UserType;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -40,7 +41,7 @@ class UserController extends AbstractFOSRestController
         Request $request
     ) {
         $userDto = new UserDTO();
-        $form = $this->createForm(RegistrationType::class, $userDto);
+        $form = $this->createForm(UserType::class, $userDto, ['validation_groups' => 'register']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -55,6 +56,6 @@ class UserController extends AbstractFOSRestController
             return $this->view();
         }
 
-        throw new UnprocessableEntityHttpException();
+        throw new FormException($form->getErrors(true));
     }
 }

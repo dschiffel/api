@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Exception\FormException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,6 +15,17 @@ class ExceptionController
      */
     public function showAction(Request $request, \Throwable $exception)
     {
-        return new JsonResponse(['error' => $exception->getMessage()]);
+        if ($exception instanceof FormException) {
+            $message = 'Invalid form';
+            $errors = $exception->getFormatterErrors();
+        }
+
+        $data = [];
+        $data['message'] = $message ?? $exception->getMessage();
+        if (isset($errors)) {
+            $data['errors'] = $errors;
+        }
+
+        return new JsonResponse($data);
     }
 }

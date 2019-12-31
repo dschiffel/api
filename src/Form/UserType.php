@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegistrationType extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,6 +22,7 @@ class RegistrationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => UserDTO::class,
+            'allow_extra_fields' => true,
         ]);
     }
 }
