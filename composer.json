@@ -9,7 +9,6 @@
         "friendsofsymfony/rest-bundle": "^2.5",
         "jms/serializer-bundle": "^2.4",
         "knplabs/knp-paginator-bundle": "^4.1",
-        "mailjet/mailjet-bundle": "^2.0",
         "nelmio/cors-bundle": "^1.5",
         "sensio/framework-extra-bundle": "^5.3",
         "symfony/console": "^4.3",
