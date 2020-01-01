@@ -52,6 +52,8 @@ class UserController extends AbstractFOSRestController
             $em->persist($user);
             $em->flush();
 
+            // todo send email
+
             return $this->view();
         }
 

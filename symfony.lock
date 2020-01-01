@@ -90,6 +90,15 @@
             "config/packages/fos_rest.yaml"
         ]
     },
+    "guzzlehttp/guzzle": {
+        "version": "6.5.2"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.6.1"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -121,6 +130,24 @@
     },
     "knplabs/knp-paginator-bundle": {
         "version": "v4.1.0"
+    },
+    "mailjet/mailjet-apiv3-php": {
+        "version": "v1.4.1"
+    },
+    "mailjet/mailjet-bundle": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "48a7f92015372654b5056855da5e94d54bd8d948"
+        },
+        "files": [
+            "config/packages/mailjet.yaml"
+        ]
+    },
+    "mailjet/mailjet-swiftmailer": {
+        "version": "1.0.6"
     },
     "nelmio/cors-bundle": {
         "version": "1.5",
@@ -164,8 +191,14 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.1.0"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -178,6 +211,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "swiftmailer/swiftmailer": {
+        "version": "v5.4.12"
     },
     "symfony/cache": {
         "version": "v4.2.4"

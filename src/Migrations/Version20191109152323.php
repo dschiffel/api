@@ -19,9 +19,6 @@ final class Version20191109152323 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE deploy_attribute DROP FOREIGN KEY FK_859118424E0AA1CD');
         $this->addSql('DROP INDEX IDX_859118424E0AA1CD ON deploy_attribute');
         $this->addSql('ALTER TABLE deploy_attribute CHANGE rel_id deploy_id INT NOT NULL');
@@ -31,9 +28,6 @@ final class Version20191109152323 extends AbstractMigration
 
     public function down(Schema $schema) : void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE deploy_attribute DROP FOREIGN KEY FK_859118427886667B');
         $this->addSql('DROP INDEX IDX_859118427886667B ON deploy_attribute');
         $this->addSql('ALTER TABLE deploy_attribute CHANGE deploy_id rel_id INT NOT NULL');

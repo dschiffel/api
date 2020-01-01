@@ -19,9 +19,6 @@ final class Version20191109131603 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE attribute DROP FOREIGN KEY FK_FA7AEFFB3E030ACD');
         $this->addSql('ALTER TABLE environment DROP FOREIGN KEY FK_4626DE223E030ACD');
         $this->addSql('DROP TABLE application');
@@ -33,9 +30,6 @@ final class Version20191109131603 extends AbstractMigration
 
     public function down(Schema $schema) : void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('CREATE TABLE application (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('ALTER TABLE attribute ADD application_id INT NOT NULL');
         $this->addSql('ALTER TABLE attribute ADD CONSTRAINT FK_FA7AEFFB3E030ACD FOREIGN KEY (application_id) REFERENCES application (id)');
