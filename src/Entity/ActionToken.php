@@ -39,6 +39,14 @@ class ActionToken
      */
     private $active = true;
 
+    /**
+     * ActionToken constructor.
+     */
+    public function __construct()
+    {
+        $this->token = substr(sha1(mt_rand(10000, 99999) . time() . mt_rand(10000, 99999)), 0, 32);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

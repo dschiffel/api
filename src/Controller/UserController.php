@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\DTO\Assembler\UserAssembler;
 use App\DTO\UserDTO;
+use App\Entity\ActionToken;
 use App\Exception\FormException;
 use App\Form\UserType;
+use App\Mailer\Mailer;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -37,6 +39,7 @@ class UserController extends AbstractFOSRestController
     public function register(
         UserAssembler $userAssembler,
         UserPasswordEncoderInterface $encoder,
+        Mailer $mailer,
         Request $request
     ) {
         $userDto = new UserDTO();
@@ -52,7 +55,14 @@ class UserController extends AbstractFOSRestController
             $em->persist($user);
             $em->flush();
 
-            // todo send email
+            $actionToken = new ActionToken();
+            $actionToken
+                ->setAction(ActionToken::ACTION_CONFIRM_REGISTRATION)
+                ->setUser($user);
+            $em->persist($actionToken);
+            $em->flush();
+
+            $mailer->sendConfirmationEmail($actionToken);
 
             return $this->view();
         }
