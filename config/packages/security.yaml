@@ -17,6 +17,7 @@ security:
         main:
             stateless: true
             anonymous: ~
+            user_checker: App\Security\EmailConfirmedUserChecker
             logout:
                 success_handler: App\Security\LogoutSuccessHandler
 
