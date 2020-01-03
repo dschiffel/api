@@ -36,7 +36,7 @@ class UserController extends AbstractFOSRestController
     /**
      * @Rest\Post("/register")
      */
-    public function register(
+    public function registerAction(
         UserAssembler $userAssembler,
         UserPasswordEncoderInterface $encoder,
         Mailer $mailer,
@@ -68,5 +68,13 @@ class UserController extends AbstractFOSRestController
         }
 
         throw new FormException($form->getErrors(true));
+    }
+
+    /**
+     * @Rest\Post("/confirm/{token}")
+     */
+    public function confirmAction(string $token)
+    {
+        return $this->view();
     }
 }
